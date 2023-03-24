@@ -1,0 +1,234 @@
+1. JDK 설치
+jdk-8u162-windows-x64.exe    		
+
+2.0  \hybridapp 디렉토리 만들기
+>cd \
+>md hybridapp
+
+2. 아파치 앤트 설치하기
+c:\HybridApp\폴더에 "apache-ant-1.9.16-bin.zip  download" 
+알아서 풀기
+
+3. Gradle 설치하기
+c:\HybridApp\폴더에 "gradle-7.4.zip download"
+알아서 풀기
+
+4. 안드로이드 스튜디오 설치
+4.1 가상 기계(AVD)는 "Nexus 5"나 "Nexus 5X" api 29 로 만드세요
+4.2 안드로이드 플랫폼 패키지 추가 설치하기
+SDK platforms
+	Android 12L	32
+	Android 12	31
+	Android 11	30
+	Android R	29
+SDK Tools
+	Android SDK Tools
+	Android SDK Platfor-tools
+	Android SDK Build-tools
+
+Extra
+	Android Support Repository
+	Android Auto Desktop head unit emulator
+	Android auto API simulator
+	Google Repository
+	Google USB Driver
+	Google Play Services
+	Android SDK Command-line Tools
+	Intel x86 Emulator Accelerator(HAXM installer)
+
+5. 환경 변수 설정하기(윈도우+x => 시스템=> 고급시스템설정)
+JAVA_HOME 		c:\progrqm files\java\jdk1.8--
+ANDROID_SDK_ROOT	C:\Users\608\AppData\Local\Android\android-sdk
+GRADLE_HOME		C:\gradle-7.4
+
+Path 
+	%JAVA_HOME%\bin;
+	%ANDROID_SDK_ROOT%\tools
+	%ANDROID_SDK_ROOT%\platform-tools
+	%ANDROID_SDK_ROOT%\build-tools
+	%ANDROID_SDK_ROOT%\cmdline-tools\latest\bin
+	%ANDROID_SDK_ROOT\emulator
+	%GRADLE_HOME%\bin
+	c:\HybridApp\apace-ant-1.9.16\bin
+
+6. Node.js 설치하기
+"node js 설치" 검색 후 다운로드
+>node -v
+>npm -v
+>npm update -g
+
+7. 폰갭(코르도바 설치하기)
+>npm install -g phonegap
+>npm install -g cordova
+>cordova -v
+>npm update -g phonegap
+>npm update -g cordova
+
+
+9. 안드로이드 코르도바 앱 만들기
+>mkdir \HybridProject
+>cd \HybridProject
+>cordova create test com.example.test testApp -d
+>cd test
+>dir
+>dir platform
+>cordova platform add android
+>dir platform
+
+10. Gradle Scripts -  build.gradle(:app) ->안드로이드 스튜디오
+
+-android 밑에 namespace 위에
+packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+    }
+
+11. App - Manifests -  AndroidManifest.xml
+-application 안에 
+android:largeHeap="true" 넣기
+
+
+12. C:\Users\[사용자명]\.android 내에 있는 debug.keystore파일 삭제
+(삭제가 되지 않을 경우에는 Ctrl+Alt+Del => 작업관리자에서
+해당 프로세스 작업 끝내기 후에 삭제)
+
+13. Build - Clean Project
+
+14. 자신이 만든 프로젝트의 첫 번째 파일이름을 index.html로 변경
+CDN 방식을 Download 방식으로 변경
+---------------------------------------------------------------------------------------
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"/>
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+====>
+
+	<link rel="stylesheet" href="./css/jquery.mobile-1.4.5.min.css"/>
+	<script src="./js/jquery-1.11.1.min.js"></script>
+	<script src="./js/jquery.mobile-1.4.5.min.js"></script>
+---------------------------------------------------------------------------------------
+
+아래에 아래의 코드 추가
+
+<script src="cordova.js"></script>
+
+15. 프로젝트 폴더에 있는 모든 파일을 test폴더 아래에 있는 www 폴더로 복사
+
+16. "삼성 usb 드라이버" 검색하여 파일 다운로드 및 설치
+
+17. "USB 디버깅 설정 방법" 검색하여 폰을 usb 디버깅 상태로 설정
+
+18. 컴퓨터와 폰 연결
+
+19. AVD  실행 혹은 스마트폰 컴과 연결
+>cordova run android --list
+>cordova emulate android
+  (에뮬레이터에 실행)
+>cordova run android
+  (기기에 실행)
+
+
+
+
+Gradle Scripts 아래 두 번째 build.gradle 파일
+----------------------------------------------------------------------------------
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+    }
+    namespace 'com.example.test'
+    compileSdk 32
+    defaultConfig {
+        applicationId "com.example.test"
+        minSdk 26
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.navigation:navigation-fragment:2.5.3'
+    implementation 'androidx.navigation:navigation-ui:2.5.3'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+}
+----------------------------------------------------------------------------------
+
+App - Manifests - AndroidManifests.xml 파일
+
+----------------------------------------------------------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Test"
+        android:largeHeap="true"
+        tools:targetApi="31">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Test.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+    </application>
+
+</manifest>
+
+
