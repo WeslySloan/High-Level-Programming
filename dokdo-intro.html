@@ -1,0 +1,326 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>jQuery Mobile</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.15.11/dist/css/uikit.min.css">
+
+
+    <link rel="stylesheet" href="./css/jquery.mobile-1.4.5.min.css" />
+    <script src="./js/jquery-1.11.1.min.js"></script>
+    <script src="./js/jquery.mobile-1.4.5.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    
+
+    <style>
+      li {
+        list-style: none;
+      }
+      .picture {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .picture li {
+        float: left;
+        width: 50%;
+      }
+      .picture li a {
+        display: block;
+        margin: 5px;
+        border: 1px;
+      }
+      .picture li img {
+        display: block;
+        width: 50%;
+        height: auto;
+      }
+      .picture li img:hover {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div data-theme="b">
+      <div data-role="page" id="home">
+        <div data-role="header" data-theme="b">
+          <h1>넷플릭스 소개 앱</h1>
+        </div>
+        <div data-role="content" style="text-align: center">
+          <img src="./img/Netflix_Logo_PMS.png" width="20%" height="10%" />
+          <ul data-role="listview" data-inset="true">
+            <li><a href="#intro">넷플릭스 소개</a></li>
+            <li><a href="#movie" data-rel="dialog">넷플릭스 관련 영상</a></li>
+            <li><a href="#wizard3-1" data-rel="dialog">넷플릭스 소재지</a></li>
+            <li><a href="#gallery">넷플릭스 포스터 갤러리</a></li>
+          </ul>
+        </div>
+        <div data-role="footer" data-position="fixed" data-theme="b">
+          <h1>넷플릭스_김현수</h1>
+        </div>
+      </div>
+
+      <div data-role="page" id="intro" data-theme="b">
+        <div data-role="header" data-theme="b">
+          <a href="#home" data-icon="arrow-l" data-direction="reverse">처음</a>
+          <h1>넷플릭스 소개</h1>
+        </div>
+        <div data-role="content">
+          <div style="text-align: center">
+            <img src="./img/unnamed.png" width="10%" class="rounded-circle"> 
+            <!-- 부트스트랩 -->
+          </div>
+          <div
+            data-role="collapsible-set"
+            data-theme="b"
+            data-content-theme="e"
+          >
+            <div data-role="collapsible" data-collapsed="false">
+              <h3>소개</h3>
+              <p>
+                미국의 글로벌 1위 멀티미디어 엔터테인먼트 OTT 기업.
+                '넷플릭스'라는 이름의 유래는 인터넷(net)+영화(flicks)이며,
+                본사는 미국 캘리포니아주 실리콘밸리 북쪽의 로스가토스(Los
+                Gatos)와 남쪽의 로스엔젤레스 헐리우드에 위치해있다.
+              </p>
+            </div>
+            <div data-role="collapsible">
+              <h3>역사</h3>
+              <p>
+                1997년에 마크 랜돌프와 리드 헤이스팅스가 설립하여 1998년
+                서비스를 시작한 온라인 DVD 비디오 대여점이 그 시초이다.
+                대여점이라고는 해도 따로 매장이 있는 게 아니라, 넷플릭스
+                홈페이지에서 DVD 대여를 신청하면 영화 DVD를 우편으로 보내 주는
+                방식이었다. 빌린 DVD를 반납할 때는 DVD를 선납 봉투에 담은 뒤
+                우체통에 넣기만 하면 됐다. 넷플릭스 대여 서비스는 기존 비디오
+                대여점과는 달리 연체료가 없었고, 월정액 요금을 내면 DVD를
+                무제한으로 빌려 볼 수 있는 구독형 서비스도 제공하여 큰 인기를
+                끌었다.
+              </p>
+            </div>
+            <div data-role="collapsible">
+              <h3>요금제</h3>
+              <p>
+                <div style="text-align: center">
+                  <img src="./img/rateplan.jpg" />
+                </div>
+              </p>
+            </div>
+            <div data-role="collapsible">
+              <h3>차트</h3>
+              <p>
+                <canvas id="myChart" width="500" height="150"></canvas>
+                <script type="text/javascript">
+                  var context = document
+                      .getElementById('myChart')
+                      .getContext('2d');
+                  var myChart = new Chart(context, {
+                      type: 'bar', // 차트의 형태
+                      data: { // 차트에 들어갈 데이터
+                          labels: [
+                              //x 축
+                              '2010','2012','2017','2018','2019','2020','2021', '2022'
+                          ],
+                          datasets: [
+                              { //데이터
+                                  label: '넷플릭스 글로벌 가입자 인원 ( 1/10000 명 단위)', //차트 제목
+                                  fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                                  data: [
+                                      2000,3300,10900,13900,16700,20400,22180,22160 //x축 label에 대응되는 데이터 값
+                                  ],
+                                  backgroundColor: [
+                                      //색상
+                                      'rgba(255, 99, 132, 0.2)',
+                                      'rgba(255, 99, 132, 0.2)',
+                                      'rgba(255, 99, 132, 0.2)',
+                                      'rgba(255, 99, 132, 0.2)',
+                                      'rgba(255, 99, 132, 0.2)',
+                                      'rgba(255, 99, 132, 0.2)',
+                                      'rgba(255, 99, 132, 0.2)',
+                                      'rgba(255, 99, 132, 0.2)'
+                                  ],
+                                  borderWidth: 2 //경계선 굵기
+                              }/* ,
+                              {
+                                  label: 'test2',
+                                  fill: false,
+                                  data: [
+                                      8, 34, 12, 24
+                                  ],
+                                  backgroundColor: 'rgb(157, 109, 12)',
+                                  borderColor: 'rgb(157, 109, 12)'
+                              } */
+                          ]
+                      },
+                      options: {
+                          scales: {
+                              yAxes: [
+                                  {
+                                      ticks: {
+                                          beginAtZero: true
+                                      }
+                                  }
+                              ]
+                          }
+                      }
+                  });
+              </script>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div data-role="footer" data-position="fixed" data-theme="b">
+          <h1>넷플릭스_김현수</h1>
+        </div>
+      </div>
+
+      <div data-role="page" id="movie" data-theme="b">
+        <div data-role="header" data-position="fixed" data-theme="b">
+          <h1>넷플릭스 관련 영상</h1>
+        </div>
+        <div data-role="content">
+          <div class="ui-bar ui-bar-a">넷플릭스 소개 영상</div>
+          <br />
+          <li>
+            <iframe
+              width="100%"
+              height="240"
+              src="https://www.youtube.com/embed/nCDRVWeOnYE"
+            ></iframe>
+          </li>
+          <br />
+          <div class="ui-bar ui-bar-a">넷플릭스 인트로 영상</div>
+          <br />
+          <li>
+            <iframe
+              width="100%"
+              height="240"
+              src="https://www.youtube.com/embed/Fq2kK1xdDGw"
+            ></iframe>
+          </li>
+        </div>
+        <div data-role="footer" data-theme="b"></div>
+      </div>
+
+      <div data-role="page" id="wizard3-1">
+        <div data-role="header">
+          <h1>넷플릭스 본사 소재지</h1>
+        </div>
+        <div data-role="content">
+          <div class="map">100 Winchester Cir, Los Gatos, California 95032, United States</div>
+          <br />
+
+          <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12702.427970717315!2d-121.963983!3d37.257031!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808e35a0d3457091%3A0xdebdf28350f4befc!2sNetflix%20-%20Building%20E%20-%20Main%20Lobby!5e0!3m2!1sko!2skr!4v1680170399644!5m2!1sko!2skr" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          
+          <!-- <audio controls width="100%" preload="metadata">
+            <source src="./img/arirangalone.mp3" type="audio/mp3" />
+          </audio>
+          <img src="./img/3-1.jpg" alt="" width="100%" /> -->
+
+        </div>
+        <div data-role="footer">
+          <a href="#home" data-direction="reverse">이전</a>
+          <a href="#wizard3-2" data-rel="dialog" data-transition="slide"
+            >다음</a
+          >
+        </div>
+      </div>
+
+      <div data-role="page" id="wizard3-2">
+        <div data-role="header">
+          <h1>넷플릭스 한국 법인 소재지</h1>
+        </div>
+        <div data-role="content">
+          <div class="map">서울특별시 종로구 우정국로 26, A동 20층
+            (공평동, 센트로폴리스)</div>
+          <br />
+          <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12649.202350726908!2d126.98373299999999!3d37.571539!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca2e9073149f9%3A0x6c975ae775d878fe!2z7ISc7Jq47Yq567OE7IucIOyiheuhnOq1rCDsmrDsoJXqta3roZwgMjY!5e0!3m2!1sko!2skr!4v1680170744862!5m2!1sko!2skr" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <img src="3-2.jpg" alt="" width="100%" />
+        </div>
+        <div data-role="footer">
+          <a href="#wizard3-1" data-direction="reverse">이전</a>
+          <a href="#home">처음</a>
+        </div>
+      </div>
+
+      <div data-role="page" id="gallery" data-theme="b">
+        <div data-role="header" data-position="fixed" data-theme="b">
+          <a href="#home" data-icon="arrow-l" data-direction="reverse">처음</a>
+          <h1>넷플릭스 포스터 갤러리</h1>
+        </div>
+        <div data-role="content">
+          <ul class="picture">
+            <li>
+              <a href="./img/수리남_포스터.jpg" width="50%" rel="external"
+                ><img src="./img/수리남_포스터.jpg"
+              /></a>
+            </li>
+            <li>
+              <a href="./img/1910_6124_1739.jpg" width="50%" rel="external"
+                ><img src="./img/1910_6124_1739.jpg"
+              /></a>
+            </li>
+            <li>
+              <a href="./img/5jKHUJATJDwLE7fAgH5NvTRipXS.jpg" width="50%" rel="external"
+                ><img src="./img/5jKHUJATJDwLE7fAgH5NvTRipXS.jpg"
+              /></a>
+            </li>
+            <li>
+              <a href="./img/111354885.1.jpg" width="50%" rel="external"
+                ><img src="./img/111354885.1.jpg"
+              /></a>
+            </li>
+            <li>
+              <a href="./img/kuk202107300106.680x.0.jpg" width="50%" rel="external"
+                ><img src="./img/kuk202107300106.680x.0.jpg"
+              /></a>
+            </li>
+            <li>
+              <a href="./img/202109270934249546_d.jpg" width="50%" rel="external"
+                ><img src="./img/202109270934249546_d.jpg"
+              /></a>
+            </li>
+            <li>
+              <a href="./img/3db4f49e-3743-4e82-8a8a-7cca79ea3473.jpg" width="50%" rel="external"
+                ><img src="./img/3db4f49e-3743-4e82-8a8a-7cca79ea3473.jpg"
+              /></a>
+            </li>
+            <li>
+              <a href="./img/509575_615595_4731.jpg" width="50%" rel="external"
+                ><img src="./img/509575_615595_4731.jpg"
+              /></a>
+            </li>
+            <li>
+              <a href="./img/2018120313075365655_1543810073.jpg" width="50%" rel="external"
+                ><img src="./img/2018120313075365655_1543810073.jpg"
+              /></a>
+            </li>
+            <li>
+              <a href="./img/image_readtop_2021_811518_16296798414759527.jpg" width="50%" rel="external"
+                ><img src="./img/image_readtop_2021_811518_16296798414759527.jpg"
+              /></a>
+            </li>
+            <li>
+              <a href="./img/2111150954460090.jpg" width="50%" rel="external"
+                ><img src="./img/2111150954460090.jpg"
+              /></a>
+            </li>
+          </ul>
+        </div>
+        <div data-role="footer" data-position="fixed" data-theme="b">
+          <h1>넷플릭스_김현수</h1>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
