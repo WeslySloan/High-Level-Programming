@@ -34,10 +34,6 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    todos.add(TodoItem("Item1", Icons.check_circle));
-    todos.add(TodoItem("Item2", Icons.star));
-    todos.add(TodoItem("Item3", Icons.check_circle));
-    todos.add(TodoItem("Item4", Icons.star));
   }
 
   @override
@@ -210,3 +206,9 @@ class _MyAppState extends State<MyApp> {
     });
   }
 }
+
+
+
+
+
+
